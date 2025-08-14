@@ -13,8 +13,15 @@ app.use(cors({
 app.post("/user", userController.createUser)
 app.get("/users", userController.getAllUsers)
 app.patch("/user/:id", userController.updateStatus)
+
 app.post("/blog", blogController.createBlog)
 app.get("/blogs", blogController.getAllBlogs)
+
+
+
+app.get("/blog/:id", blogController.getBlogById)
+app.put("/blog/:id", blogController.updateBlog)
+
 
 
 db.on("error", (err)=>{

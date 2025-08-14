@@ -3,6 +3,7 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const userRoute = require('./routes/user.route')
 const blogRoute = require('./routes/blog.route')
+const authRoute = require('./routes/auth.route')
 dotenv.config({
     path:'.env'
 })
@@ -20,8 +21,10 @@ app.use(express.json())
 app.get("/", (req, res)=>{
     return res.send("These is / route")
 })
+
 app.use("/user", userRoute)
 app.use("/blog", blogRoute)
+app.use("/auth", authRoute)
 
 
 db.on('error', (err)=>{

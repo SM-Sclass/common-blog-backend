@@ -16,6 +16,18 @@
 //     return res.status(200).json(blogs)
 // }
 
+// exports.getBlogById = async(req, res)=>{
+//     const id = req.params.id
+//     const blog = await Blog.findById(id)
+//     return res.status(200).json(blog)
+// }
+
+// exports.updateBlog = async(req, res)=>{
+//     const id = req.params.id
+//     const bodyData =  req.body
+//     const updatedBlog = await Blog.findByIdAndUpdate(id, bodyData, {new: true})
+//     return res.status(200).json({message:"Blog updated", updatedBlog})
+// }
 
 
 
@@ -39,25 +51,26 @@
 
 
 const Blog = require('../models/blog.model')
+const { rawListeners } = require('../models/user.model')
 
-exports.createBlog = async(req, res) =>{
+exports.createBlog = async (req, res) => {
     try {
         const bodyData = req.body
-        if(!bodyData.title || !bodyData.content){
-            return res.status(400).json({message: 'Please fill all fields.'})
+        if (!bodyData.title || !bodyData.content) {
+            return res.status(400).json({ message: 'Please fill all fields.' })
         }
 
         console.log(bodyData)
 
         const newBlog = await Blog.create(bodyData)
-        res.status(201).json({message: 'Blog created successfully.', data: newBlog})
+        res.status(201).json({ message: 'Blog created successfully.', data: newBlog })
     } catch (error) {
         console.log(error)
-        return res.status(500).json({message: error || "Internal server error"})
+        return res.status(500).json({ message: error || "Internal server error" })
     }
 }
 
-exports.getBlogs = async(req,res)=>{
+exports.getBlogs = async (req, res) => {
     try {
         const blogs = await Blog.find().populate("userId").select({
             title: 1,
@@ -65,9 +78,40 @@ exports.getBlogs = async(req,res)=>{
             userId: 1,
 
         })
-        res.status(200).json({message: 'Blogs fetched successfully.', data: blogs})
+        res.status(200).json({ message: 'Blogs fetched successfully.', data: blogs })
     } catch (error) {
         console.log(error)
-        return res.status(500).json({message:error || "Internal server error"})
+        return res.status(500).json({ message: error || "Internal server error" })
+    }
+}
+
+exports.getBlogById = async (req, res) => {
+    try {
+        const id = req.params.id
+        const blog = await Blog.findById(id)
+        if (!blog) {
+            return res.status(404).json({ message: "Blog not found" })
+        }
+
+        return res.status(200).json(blog)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: error || "Internal server error" })
+    }
+}
+
+exports.updateBlog = async (req, res) => {
+    try {
+        const id = req.params.id
+        const bodyData = req.body
+        const updatedBlog = await Blog.findByIdAndUpdate(id, bodyData, { new: true })
+        if (!updatedBlog) {
+            return res.status(404).json({message: "Blog not found for updating"})
+        }
+
+        return res.status(200).json(updatedBlog)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: error || "Internal server error" })
     }
 }
