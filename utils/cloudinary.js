@@ -12,7 +12,7 @@ cloudinary.config({
 const uploadtoCloudinary = async(localPath) =>{
     try {
         const response = await cloudinary.uploader.upload(localPath)
-        fs.unlink(localPath)
+         await fs.promises.unlink(localPath);
 
         return response
     } catch (error) {
