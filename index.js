@@ -14,7 +14,6 @@ dotenv.config({
 
 const db = require('./db') // mongoose.connection
 
-const port = 5000
 
 app.use(cors({
     origin:"*"
@@ -33,7 +32,7 @@ app.use("/auth", authRoute)
 db.on('error', (err)=>{
     console.log(`Some error has occured ${err}`)
 })
-app.listen(port, (err) => {
+app.listen(process.env.PORT, (err) => {
     if(err) console.log(err)
     console.log("Server running on port 5000")
 })
