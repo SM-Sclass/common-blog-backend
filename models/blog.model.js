@@ -4,7 +4,7 @@ const blogSchema = new mongoose.Schema(
     {
         title: { type: String, required: true },
         content: { type: String, required: true },
-        image_url: { type: String },
+        image_url: { type: String },// https://nextform.s3.eu-north-1.amazonaws.com/MONGO+BASICS.pdf
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
         isActive: { type: Boolean, default: true }
     },

@@ -6,7 +6,7 @@ const connectdb = () =>{
     
     }
     mongoose.connect(process.env.MONGO_URI)
-    // mongoose.connect("mongodb+srv://Asus:$UM!T376@cluster0.vvhlsc0.mongodb.net/static-express")
+    console.log("Mongo db connected successfully")
 }
 connectdb()
 
